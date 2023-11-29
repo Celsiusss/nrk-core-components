@@ -21,6 +21,7 @@ export default class CoreScroll extends HTMLElement {
     get scrollBottom(): number;
     set duration(arg: number);
     get duration(): number;
+    get xOffset(): number;
 }
 export type scrollCoords = {
     x: number;

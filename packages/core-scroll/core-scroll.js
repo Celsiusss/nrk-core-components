@@ -183,6 +183,8 @@ export default class CoreScroll extends HTMLElement {
   get duration () { return Math.max(0, this.getAttribute('duration')) || 500 }
 
   set duration (val) { this.setAttribute('duration', val) }
+
+  get xOffset () { return +this.getAttribute('xOffset') || 0 }
 }
 
 function onMousedown (event) {
@@ -274,8 +276,9 @@ function parsePoint (self, move) {
       return rect[point.move.prop || move] < edge
     })
   }
+  const xOffset = self.xOffset || 0
   return {
-    x: Math.max(0, Math.min(point.x, self.scrollWidth - self.clientWidth)),
+    x: Math.max(0, Math.min(point.x + xOffset, self.scrollWidth - self.clientWidth)),
     y: Math.max(0, Math.min(point.y, self.scrollHeight - self.clientHeight))
   }
 }
