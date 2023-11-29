@@ -266,7 +266,7 @@ function parsePoint (self, move) {
     const start = point.move.x ? 'left' : 'top'
     const bounds = self.getBoundingClientRect()
     const scroll = bounds[start] - self[point.move.x ? 'scrollLeft' : 'scrollTop']
-    const edge = bounds[start] + bounds[point.move.x ? 'width' : 'height'] * point.move[axis]
+    const edge = bounds[start] + bounds[point.move.x ? 'width' : 'height'] * point.move[axis] + (axis == 'x' ? self.xOffset : 0)
 
     scrollItems.every((el) => { // Use .every as this loop stops on return false
       const rect = el.getBoundingClientRect()
@@ -276,9 +276,8 @@ function parsePoint (self, move) {
       return rect[point.move.prop || move] < edge
     })
   }
-  const xOffset = self.xOffset || 0
   return {
-    x: Math.max(0, Math.min(point.x + xOffset, self.scrollWidth - self.clientWidth)),
+    x: Math.max(0, Math.min(point.x - self.xOffset, self.scrollWidth - self.clientWidth)),
     y: Math.max(0, Math.min(point.y, self.scrollHeight - self.clientHeight))
   }
 }
